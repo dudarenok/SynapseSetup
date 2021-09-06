@@ -94,7 +94,7 @@
     "workspaceName": "[toLower(concat(variables('synapseName'),'ws1'))]",
     "sparkPoolName": "[toLower(concat(variables('workspaceName'),'spark1'))]",
     "keyVaultName": "[toLower(concat(parameters('companyAcronym'),variables('deploymentType'),'kv'))]",
-    "storageAccountId": "[toLower(concat(parameters('companyAcronym'),variables('deploymentType'),'dlssa'))]",
+    "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('dlsName'))]",
     "timeZone": "Central European Standard Time",
     "sku": "DW200c",
     "allowAllConnections": "true",
