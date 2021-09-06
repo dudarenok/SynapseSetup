@@ -97,8 +97,7 @@
     "storageAccountId": "[toLower(concat(parameters('companyAcronym'),variables('deploymentType'),'dlssa'))]",
     "timeZone": "Central European Standard Time",
     "sku": "DW200c",
-    "allowAllConnections": true,
-    "metadataSync": false,
+    "allowAllConnections": "true",
     "logicApps": [
       "SynapsePauseSchedule",
       "SynapseResumeSchedule"
@@ -331,7 +330,7 @@
       },
       "resources": [
         {
-          "condition": "[variables('metadataSync')]",
+          "condition": "[bool('false')]",
           "type": "metadataSync",
           "apiVersion": "2019-06-01-preview",
           "name": "config",
@@ -340,7 +339,7 @@
             "[variables('sqlPoolName')]"
           ],
           "properties": {
-            "Enabled": "[variables('metadataSync')]"
+            "Enabled": "[bool('false')]"
           }
         }
       ]
