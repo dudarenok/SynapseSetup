@@ -97,8 +97,8 @@
     "storageAccountId": "[toLower(concat(parameters('companyAcronym'),variables('deploymentType'),'dlssa'))]",
     "timeZone": "Central European Standard Time",
     "sku": "DW200c",
-    "allowAllConnections": "true",
-    "metadataSync": "false",
+    "allowAllConnections": true,
+    "metadataSync": false,
     "logicApps": [
       "SynapsePauseSchedule",
       "SynapseResumeSchedule"
