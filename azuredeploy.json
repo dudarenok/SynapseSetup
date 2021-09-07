@@ -122,12 +122,11 @@
   "variables": {
     "_artifactsLocation": "[deployment().properties.templatelink.uri]",
     "location": "[resourceGroup().location]",
-    "synapseName": "[toLower(concat(parameters('companyAcronym')))]",
     "dlsName": "[toLower(concat(parameters('companyAcronym'),'dls'))]",
     "dlsFsName": "[toLower(concat(parameters('companyAcronym'),'fs'))]",
     "sqlPoolName": "[toLower(concat(variables('workspaceName'),'sql1'))]",
-    "workspaceName": "[toLower(concat(variables('synapseName'),'ws'))]",
-    "keyVaultName": "[toLower(concat(parameters('companyAcronym'),'kv'))]",
+    "workspaceName": "[toLower(concat(parameters('companyAcronym'),'ws'))]",
+    "keyVaultName": "[toLower(concat(variables('workspaceName'),'kev'))]",
     "sparkPoolName": "[toLower(concat(variables('workspaceName'),'spark1'))]",
     "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('dlsName'))]",
     "sku": "DW200c",
@@ -377,9 +376,9 @@
         "[variables('workspaceName')]"
       ],
       "properties": {
+        "status": "Paused",
         "createMode": "Default",
         "collation": "SQL_Latin1_General_CP1_CI_AS",
-        "state": "paused"
       },
       "resources": [
         {
