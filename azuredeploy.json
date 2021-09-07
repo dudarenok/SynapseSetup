@@ -8,29 +8,6 @@
         "description": "This is a Three Letter Acronym for your company name. 'CON' for Contoso for example."
       }
     },
-    "sparkDeployment": {
-      "type": "string",
-      "defaultValue": "true",
-      "allowedValues": [
-        "true",
-        "false"
-      ],
-      "metadata": {
-        "description": "'True' deploys an Apache Spark pool as well as a SQL pool. 'False' does not deploy an Apache Spark pool."
-      }
-    },
-    "sparkNodeSize": {
-      "type": "string",
-      "defaultValue": "Medium",
-      "allowedValues": [
-        "Small",
-        "Medium",
-        "Large"
-      ],
-      "metadata": {
-        "description": "This parameter will determine the node size if SparkDeployment is true"
-      }
-    },
     "sqlAdministratorLogin": {
       "type": "string",
       "metadata": {
@@ -41,17 +18,6 @@
       "type": "securestring",
       "metadata": {
         "description": "The password for the SQL Administrator"
-      }
-    },
-    "Frequency": {
-      "type": "string",
-      "defaultValue": "Weekdays",
-      "allowedValues": [
-        "Daily",
-        "Weekdays"
-      ],
-      "metadata": {
-        "description": "Choose whether to run schedule every day of the week, or only on weekdays"
       }
     },
     "timeZone": {
@@ -140,19 +106,28 @@
       "metadata": {
         "description": "Time of day when the data warehouse will be paused"
       }
+    },
+    "Frequency": {
+      "type": "string",
+      "defaultValue": "Weekdays",
+      "allowedValues": [
+        "Daily",
+        "Weekdays"
+      ],
+      "metadata": {
+        "description": "Choose whether to run schedule every day of the week, or only on weekdays"
+      }
     }
   },
   "variables": {
     "_artifactsLocation": "[deployment().properties.templatelink.uri]",
     "location": "[resourceGroup().location]",
-    "deploymentType": "poc",
-    "synapseName": "[toLower(concat(parameters('companyAcronym'),variables('deploymentType')))]",
-    "dlsName": "[toLower(concat(parameters('companyAcronym'),variables('deploymentType'),'dls'))]",
-    "dlsFsName": "[toLower(concat(parameters('companyAcronym'),variables('deploymentType'),'fs1'))]",
+    "synapseName": "[toLower(concat(parameters('companyAcronym')))]",
+    "dlsName": "[toLower(concat(parameters('companyAcronym'),'dls'))]",
+    "dlsFsName": "[toLower(concat(parameters('companyAcronym'),'fs'))]",
     "sqlPoolName": "[toLower(concat(variables('workspaceName'),'sql1'))]",
-    "workspaceName": "[toLower(concat(variables('synapseName'),'ws1'))]",
-    "sparkPoolName": "[toLower(concat(variables('workspaceName'),'spark1'))]",
-    "keyVaultName": "[toLower(concat(parameters('companyAcronym'),variables('deploymentType'),'kv'))]",
+    "workspaceName": "[toLower(concat(variables('synapseName'),'ws'))]",
+    "keyVaultName": "[toLower(concat(parameters('companyAcronym'),'kv'))]",
     "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('dlsName'))]",
     "sku": "DW200c",
     "allowAllConnections": "true",
@@ -235,9 +210,6 @@
           "companyAcronym": {
             "value": "[parameters('companyAcronym')]"
           },
-          "deploymentType": {
-            "value": "[variables('deploymentType')]"
-          },
           "timeZone": {
             "value": "[parameters('timeZone')]"
           },
@@ -268,9 +240,6 @@
           },
           "companyAcronym": {
             "value": "[parameters('companyAcronym')]"
-          },
-          "deploymentType": {
-            "value": "[variables('deploymentType')]"
           },
           "timeZone": {
             "value": "[parameters('timeZone')]"
@@ -401,31 +370,6 @@
           }
         }
       ]
-    },
-    {
-      "condition": "[equals(parameters('sparkDeployment'),'true')]",
-      "type": "Microsoft.Synapse/workspaces/bigDataPools",
-      "apiVersion": "2019-06-01-preview",
-      "name": "[concat(variables('workspaceName'), '/', variables('sparkPoolName'))]",
-      "location": "[variables('location')]",
-      "dependsOn": [
-        "[variables('workspaceName')]"
-      ],
-      "properties": {
-        "nodeCount": 5,
-        "nodeSizeFamily": "MemoryOptimized",
-        "nodeSize": "[parameters('sparkNodeSize')]",
-        "autoScale": {
-          "enabled": true,
-          "minNodeCount": 3,
-          "maxNodeCount": 40
-        },
-        "autoPause": {
-          "enabled": true,
-          "delayInMinutes": 15
-        },
-        "sparkVersion": "2.4"
-      }
     },
     {
       "scope": "[concat('Microsoft.Storage/storageAccounts/', variables('dlsName'))]",
