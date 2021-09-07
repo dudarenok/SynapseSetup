@@ -54,6 +54,27 @@
         "description": "Choose whether to run schedule every day of the week, or only on weekdays"
       }
     },
+    "timeZone": {
+      "type": "string",
+      "defaultValue": "Central European Standard Time",
+      "allowedValues": [
+        "Central Standard Time",
+        "Central America Standard Time",
+        "Eastern Standard Time",
+        "Atlantic Standard Time",
+        "Central Europe Standard Time",
+        "Central European Standard Time",
+        "W. Europe Standard Time",
+        "W. Central Africa Standard Time",
+        "E. Europe Standard Time",
+        "FLE Standard Time",
+        "GTB Standard Time",
+        "West Pacific Standard Time"
+      ],
+      "metadata": {
+        "description": "Timezone for the schedule. Consult https://msdn.microsoft.com/en-us/library/ms912391(v=winembedded.11).aspx for more information"
+      }
+    },
     "ResumeTime": {
       "type": "string",
       "defaultValue": "08:00 AM (8:00)",
@@ -180,7 +201,7 @@
             "value": "[variables('deploymentType')]"
           },
           "timeZone": {
-            "value": "Central European Standard Time"
+            "value": "[parameters('timeZone')]"
           },
           "PauseTime": {
             "value": "[parameters('PauseTime')]"
@@ -214,7 +235,7 @@
             "value": "[variables('deploymentType')]"
           },
           "timeZone": {
-            "value": "Central European Standard Time"
+            "value": "[parameters('timeZone')]"
           },
           "ResumeTime": {
             "value": "[parameters('ResumeTime')]"

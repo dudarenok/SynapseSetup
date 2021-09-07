@@ -17,6 +17,9 @@
     "Frequency": {
       "type": "string"
     },
+    "TIME_ZONE": {
+      "type": "string"
+    },
     "ResumeTime": {
       "type": "string"
     }
@@ -82,7 +85,7 @@
                       "ResourceGroupName": "[resourceGroup().name]",
                       "SubscriptionId": "[subscription().subscriptionId]",
                       "TenantId": "[subscription().tenantId]",
-                      "ScheduleTimeZone": "Central European Standard Time",
+                      "ScheduleTimeZone": "[parameters('TIME_ZONE')]",
                       "ResumeTime": "[variables('resumeTimeString')]"
                     }
                   }
@@ -199,7 +202,7 @@
               "recurrence": {
                 "frequency": "Week",
                 "interval": 1,
-                "timeZone": "Central European Standard Time",
+                "timeZone": "[parameters('TIME_ZONE')]",
                 "startTime": "2019-01-01T00:00:00Z",
                 "schedule": {
                   "weekDays": "[variables('recurrenceSchedule')]",
