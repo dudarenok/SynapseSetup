@@ -76,7 +76,7 @@
     },
     "PauseTime": {
       "type": "string",
-      "defaultValue": "05:00 PM ( 17:00 )",
+      "defaultValue": "06:00 PM ( 18:00 )",
       "allowedValues": [
         "12:00 AM (  0:00 )",
         "01:00 AM (  1:00 )",
@@ -128,6 +128,7 @@
     "sqlPoolName": "[toLower(concat(variables('workspaceName'),'sql1'))]",
     "workspaceName": "[toLower(concat(variables('synapseName'),'ws'))]",
     "keyVaultName": "[toLower(concat(parameters('companyAcronym'),'kv'))]",
+    "sparkPoolName": "[toLower(concat(variables('workspaceName'),'spark1'))]",
     "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('dlsName'))]",
     "sku": "DW200c",
     "allowAllConnections": "true",
@@ -251,6 +252,30 @@
             "value": "[variables('location')]"
           }
         }
+      }
+    },
+    {
+      "type": "Microsoft.Synapse/workspaces/bigDataPools",
+      "apiVersion": "2019-06-01-preview",
+      "name": "[concat(variables('workspaceName'), '/', variables('sparkPoolName'))]",
+      "location": "[variables('location')]",
+      "dependsOn": [
+        "[variables('workspaceName')]"
+      ],
+      "properties": {
+        "nodeCount": 5,
+        "nodeSizeFamily": "MemoryOptimized",
+        "nodeSize": "Medium",
+        "autoScale": {
+          "enabled": true,
+          "minNodeCount": 3,
+          "maxNodeCount": 40
+        },
+        "autoPause": {
+          "enabled": true,
+          "delayInMinutes": 15
+        },
+        "sparkVersion": "2.4"
       }
     },
     {
