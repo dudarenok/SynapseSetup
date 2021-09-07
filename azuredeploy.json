@@ -95,7 +95,6 @@
     "sparkPoolName": "[toLower(concat(variables('workspaceName'),'spark1'))]",
     "keyVaultName": "[toLower(concat(parameters('companyAcronym'),variables('deploymentType'),'kv'))]",
     "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('dlsName'))]",
-    "timeZone": "Central European Standard Time",
     "sku": "DW200c",
     "allowAllConnections": "true",
     "logicApps": [
@@ -181,7 +180,7 @@
             "value": "[variables('deploymentType')]"
           },
           "timeZone": {
-            "value": "[variables('timeZone')]"
+            "value": "Central European Standard Time"
           },
           "PauseTime": {
             "value": "[parameters('PauseTime')]"
@@ -215,7 +214,7 @@
             "value": "[variables('deploymentType')]"
           },
           "timeZone": {
-            "value": "[variables('timeZone')]"
+            "value": "Central European Standard Time"
           },
           "ResumeTime": {
             "value": "[parameters('ResumeTime')]"
