@@ -115,7 +115,7 @@
         "Weekdays"
       ],
       "metadata": {
-        "description": "Choose whether to run schedule every day of the week, or only on weekdays"
+        "description": "Choose whether to run pause/resume schedule every day of the week, or only on weekdays"
       }
     }
   },
@@ -378,7 +378,8 @@
       ],
       "properties": {
         "createMode": "Default",
-        "collation": "SQL_Latin1_General_CP1_CI_AS"
+        "collation": "SQL_Latin1_General_CP1_CI_AS",
+        "state": "paused"
       },
       "resources": [
         {
