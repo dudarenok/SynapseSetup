@@ -195,9 +195,6 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-06-01",
       "name": "logicAppPauseDeployment",
-      "dependsOn": [
-          "[concat(variables('sqlPoolName'))]"
-      ],
       "properties": {
         "mode": "Incremental",
         "templatelink": {
@@ -451,6 +448,26 @@
             "value": "[variables('logicApps')[1]]"
           }
         }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deploymentScripts",
+      "apiVersion": "2020-10-01",
+      "name": "PauseSQLPoolwithazCLI",
+      "dependsOn": [
+          "[concat(variables('sqlPoolName'))]"
+      ],
+      "location": "[variables('location')]",
+      "kind": "AzureCLI",
+      "properties": {
+        "azCliVersion": "2.25.0",
+        "timeout": "PT30M",
+        "retentionInterval": "P1D",
+        "scriptContent": "
+          az synapse sql pool pause --name $name --workspace-name $workspace --resource-group $rgroup
+        ",
+        "arguments": "[format('-name {0} -workspace-name {1} -rgroup {2}', variables('sqlPoolName'), variables('sqlPoolName'), resourceGroup().name)]",
+        "cleanupPreference": "OnSuccess"
       }
     }
   ]
