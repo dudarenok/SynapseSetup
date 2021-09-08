@@ -449,25 +449,6 @@
           }
         }
       }
-    },
-    {
-      "type": "Microsoft.Resources/deploymentScripts",
-      "apiVersion": "2020-10-01",
-      "name": "PauseSQLPoolwithazCLI",
-      "dependsOn": [
-          "[concat(variables('sqlPoolName'))]"
-      ],
-      "location": "[variables('location')]",
-      "kind": "AzureCLI",
-      "properties": {
-        "azCliVersion": "2.25.0",
-        "timeout": "PT30M",
-        "retentionInterval": "P1D",
-        "scriptContent": "
-          az synapse sql pool pause --name $name --workspace-name $workspace --resource-group $rgroup
-        ",
-        "cleanupPreference": "OnSuccess"
-      }
     }
   ]
 }
