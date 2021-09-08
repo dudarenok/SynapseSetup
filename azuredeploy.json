@@ -2,27 +2,6 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "location": {
-      "type": "string",
-      "defaultValue": "W. Europe Standard Time",
-      "allowedValues": [
-        "Central Standard Time",
-        "Central America Standard Time",
-        "Eastern Standard Time",
-        "Atlantic Standard Time",
-        "Central Europe Standard Time",
-        "Central European Standard Time",
-        "W. Europe Standard Time",
-        "W. Central Africa Standard Time",
-        "E. Europe Standard Time",
-        "FLE Standard Time",
-        "GTB Standard Time",
-        "West Pacific Standard Time"
-      ],
-      "metadata": {
-        "description": "This is a Three Letter Acronym for your company name. 'CON' for Contoso for example."
-      }
-    },
     "companyAcronym": {
       "type": "string",
       "metadata": {
@@ -142,6 +121,7 @@
   },
   "variables": {
     "_artifactsLocation": "[deployment().properties.templatelink.uri]",
+    "location": "[resourceGroup().location]",
     "dlsName": "[toLower(concat(parameters('companyAcronym'),'dls'))]",
     "dlsFsName": "[toLower(concat(parameters('companyAcronym'),'fs'))]",
     "sqlPoolName": "[toLower(concat(variables('workspaceName'),'sql1'))]",
@@ -171,7 +151,7 @@
         },
         "parameters": {
             "location": {
-                "value": "[parameters('location')]"
+                "value": "[variables('location')]"
             },
             "keyVaultName": {
                 "value": "[variables('keyVaultName')]"
@@ -200,7 +180,7 @@
           },
           "parameters": {
               "location": {
-                  "value": "[parameters('location')]"
+                  "value": "[variables('location')]"
               },
               "keyVaultName": {
                   "value": "[variables('keyVaultName')]"
@@ -240,7 +220,7 @@
             "value": "[parameters('PauseTime')]"
           },
           "location": {
-            "value": "[parameters('location')]"
+            "value": "[variables('location')]"
           }
         }
       }
@@ -271,7 +251,7 @@
             "value": "[parameters('ResumeTime')]"
           },
           "location": {
-            "value": "[parameters('location')]"
+            "value": "[variables('location')]"
           }
         }
       }
@@ -280,7 +260,7 @@
       "type": "Microsoft.Synapse/workspaces/bigDataPools",
       "apiVersion": "2019-06-01-preview",
       "name": "[concat(variables('workspaceName'), '/', variables('sparkPoolName'))]",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "dependsOn": [
         "[variables('workspaceName')]"
       ],
@@ -304,7 +284,7 @@
       "type": "Microsoft.Storage/storageAccounts",
       "apiVersion": "2019-06-01",
       "name": "[variables('dlsName')]",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "sku": {
         "name": "Standard_LRS"
       },
@@ -332,7 +312,7 @@
       "type": "Microsoft.Synapse/workspaces",
       "apiVersion": "2019-06-01-preview",
       "name": "[variables('workspaceName')]",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "identity": {
         "type": "SystemAssigned"
       },
@@ -355,7 +335,7 @@
           "type": "firewallrules",
           "apiVersion": "2019-06-01-preview",
           "name": "allowAll",
-          "location": "[parameters('location')]",
+          "location": "[variables('location')]",
           "dependsOn": [ "[variables('workspaceName')]" ],
           "properties": {
             "startIpAddress": "0.0.0.0",
@@ -366,7 +346,7 @@
           "type": "firewallrules",
           "apiVersion": "2019-06-01-preview",
           "name": "AllowAllWindowsAzureIps",
-          "location": "[parameters('location')]",
+          "location": "[variables('location')]",
           "dependsOn": [ "[variables('workspaceName')]" ],
           "properties": {
             "startIpAddress": "0.0.0.0",
@@ -377,7 +357,7 @@
           "type": "managedIdentitySqlControlSettings",
           "apiVersion": "2019-06-01-preview",
           "name": "default",
-          "location": "[parameters('location')]",
+          "location": "[variables('location')]",
           "dependsOn": [ "[variables('workspaceName')]" ],
           "properties": {
             "grantSqlControlToManagedIdentity": {
@@ -391,7 +371,7 @@
       "type": "Microsoft.Synapse/workspaces/sqlPools",
       "apiVersion": "2019-06-01-preview",
       "name": "[concat(variables('workspaceName'), '/', variables('sqlPoolName'))]",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "sku": {
         "name": "[variables('sku')]"
       },
@@ -408,7 +388,7 @@
           "type": "metadataSync",
           "apiVersion": "2019-06-01-preview",
           "name": "config",
-          "location": "[parameters('location')]",
+          "location": "[variables('location')]",
           "dependsOn": [
             "[variables('sqlPoolName')]"
           ],
@@ -423,7 +403,7 @@
       "type": "Microsoft.Authorization/roleAssignments",
       "apiVersion": "2020-04-01-preview",
       "name": "[guid(uniqueString(variables('dlsName')))]",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "dependsOn": [
         "[variables('workspaceName')]"
       ],
