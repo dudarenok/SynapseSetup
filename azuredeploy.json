@@ -366,7 +366,7 @@
     },
     {
       "type": "Microsoft.Synapse/workspaces/sqlPools",
-      "apiVersion": "2019-06-01-preview",
+      "apiVersion": "2019-04-01",
       "name": "[concat(variables('workspaceName'), '/', variables('sqlPoolName'))]",
       "location": "[variables('location')]",
       "sku": {
@@ -376,7 +376,7 @@
         "[variables('workspaceName')]"
       ],
       "properties": {
-        "status": "paused",
+        "status": "Paused",
         "createMode": "Default",
         "collation": "SQL_Latin1_General_CP1_CI_AS"
       },
