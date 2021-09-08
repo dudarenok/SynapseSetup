@@ -466,7 +466,6 @@
         "scriptContent": "
           az synapse sql pool pause --name $name --workspace-name $workspace --resource-group $rgroup
         ",
-        "arguments": "[format('-name {0} -workspace-name {1} -rgroup {2}', variables('sqlPoolName'), variables('sqlPoolName'), resourceGroup().name)]",
         "cleanupPreference": "OnSuccess"
       }
     }
