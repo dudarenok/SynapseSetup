@@ -22,7 +22,7 @@
     },
     "timeZone": {
       "type": "string",
-      "defaultValue": "Central European Standard Time",
+      "defaultValue": "W. Europe Standard Time",
       "allowedValues": [
         "Central Standard Time",
         "Central America Standard Time",
@@ -195,6 +195,9 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-06-01",
       "name": "logicAppPauseDeployment",
+      "dependsOn": [
+          "[concat(variables('workspaceName'), '/', variables('sqlPoolName'))]"
+      ],
       "properties": {
         "mode": "Incremental",
         "templatelink": {
@@ -366,7 +369,7 @@
     },
     {
       "type": "Microsoft.Synapse/workspaces/sqlPools",
-      "apiVersion": "2020-12-01",
+      "apiVersion": "2019-06-01-preview",
       "name": "[concat(variables('workspaceName'), '/', variables('sqlPoolName'))]",
       "location": "[variables('location')]",
       "sku": {
@@ -376,7 +379,6 @@
         "[variables('workspaceName')]"
       ],
       "properties": {
-        "status": "Paused",
         "createMode": "Default",
         "collation": "SQL_Latin1_General_CP1_CI_AS"
       },
