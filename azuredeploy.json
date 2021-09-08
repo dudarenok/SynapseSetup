@@ -2,6 +2,27 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "W. Europe Standard Time",
+      "allowedValues": [
+        "Central Standard Time",
+        "Central America Standard Time",
+        "Eastern Standard Time",
+        "Atlantic Standard Time",
+        "Central Europe Standard Time",
+        "Central European Standard Time",
+        "W. Europe Standard Time",
+        "W. Central Africa Standard Time",
+        "E. Europe Standard Time",
+        "FLE Standard Time",
+        "GTB Standard Time",
+        "West Pacific Standard Time"
+      ],
+      "metadata": {
+        "description": "This is a Three Letter Acronym for your company name. 'CON' for Contoso for example."
+      }
+    },
     "companyAcronym": {
       "type": "string",
       "metadata": {
