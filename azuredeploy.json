@@ -317,7 +317,8 @@
       },
       "dependsOn": [
         "[variables('dlsName')]",
-        "[variables('dlsFsName')]"
+        "[variables('dlsFsName')]",
+        "[variables('keyVaultName')]"
       ],
       "properties": {
         "defaultDataLakeStorage": {
