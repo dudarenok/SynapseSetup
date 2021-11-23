@@ -420,7 +420,7 @@
       },
       "properties": {
         "friendlyName": "[variables('machinelearningName')]",
-        "keyVault": "[variables('keyVaultName')]",
+        "keyVault": "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]",
         "applicationInsights": "[resourceId('Microsoft.Insights/components',variables('appInsightsName'))]",
         "storageAccount": "[resourceId('Microsoft.Storage/storageAccounts/',variables('dlsName'))]"
       }
