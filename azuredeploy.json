@@ -128,6 +128,8 @@
     "workspaceName": "[toLower(concat(parameters('companyAcronym'),'ws'))]",
     "keyVaultName": "[toLower(concat(variables('workspaceName'),'kev'))]",
     "sparkPoolName": "[toLower(concat(variables('workspaceName'),'spark1'))]",
+    "machinelearningName": "[toLower(concat(variables('workspaceName'),'ml'))]",
+    "appInsightsName": "[toLower(concat(variables('workspaceName'),'ai'))]",
     "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('dlsName'))]",
     "sku": "DW200c",
     "allowAllConnections": "true",
@@ -150,46 +152,46 @@
           "uri": "[uri(variables('_artifactsLocation'), concat('nestedtemplates/keyvault.json'))]"
         },
         "parameters": {
-            "location": {
-                "value": "[variables('location')]"
-            },
-            "keyVaultName": {
-                "value": "[variables('keyVaultName')]"
-            },
-            "sqlAdministratorLoginPassword": {
-                "value": "[parameters('sqlAdministratorLoginPassword')]"
-            },
-            "datalakeAccountAccessKeyValue": {
-                "value": "[listKeys(variables('storageAccountId'), '2019-06-01').keys[0].value]"
-            }
+          "location": {
+            "value": "[variables('location')]"
+          },
+          "keyVaultName": {
+            "value": "[variables('keyVaultName')]"
+          },
+          "sqlAdministratorLoginPassword": {
+            "value": "[parameters('sqlAdministratorLoginPassword')]"
+          },
+          "datalakeAccountAccessKeyValue": {
+            "value": "[listKeys(variables('storageAccountId'), '2019-06-01').keys[0].value]"
+          }
         }
       }
     },
     {
-        "name": "keyVaultPermissionsUpdate",
-        "type": "Microsoft.Resources/deployments",
-        "apiVersion": "2018-05-01",
-        "dependsOn": [
-            "[variables('workspaceName')]",
-            "[resourceId('Microsoft.Resources/deployments','keyVaultDeployment')]"
-        ],
-        "properties": {
-          "mode": "Incremental",
-          "templatelink": {
-            "uri": "[uri(variables('_artifactsLocation'), concat('nestedtemplates/keyvaultpermissionsupdate.json'))]"
+      "name": "keyVaultPermissionsUpdate",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "dependsOn": [
+        "[variables('workspaceName')]",
+        "[resourceId('Microsoft.Resources/deployments','keyVaultDeployment')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templatelink": {
+          "uri": "[uri(variables('_artifactsLocation'), concat('nestedtemplates/keyvaultpermissionsupdate.json'))]"
+        },
+        "parameters": {
+          "location": {
+            "value": "[variables('location')]"
           },
-          "parameters": {
-              "location": {
-                  "value": "[variables('location')]"
-              },
-              "keyVaultName": {
-                  "value": "[variables('keyVaultName')]"
-              },
-              "workspaceName": {
-                  "value": "[variables('workspaceName')]"
-              }
+          "keyVaultName": {
+            "value": "[variables('keyVaultName')]"
+          },
+          "workspaceName": {
+            "value": "[variables('workspaceName')]"
           }
         }
+      }
     },
     {
       "type": "Microsoft.Resources/deployments",
@@ -268,7 +270,7 @@
         "autoScale": {
           "enabled": true,
           "minNodeCount": 3,
-          "maxNodeCount": 40
+          "maxNodeCount": 20
         },
         "autoPause": {
           "enabled": true,
@@ -394,6 +396,34 @@
           }
         }
       ]
+    },
+    {
+      "type": "microsoft.insights/components",
+      "name": "[variables('appInsightsName')]",
+      "location": "[variables('location')]",
+      "apiVersion": "2014-08-01",
+      "properties": {
+        "Flow_Type": "Redfield"
+      }
+    },
+    {
+      "type": "Microsoft.MachineLearningServices/workspaces",
+      "apiVersion": "2019-11-01",
+      "name": "[variables('machinelearningName')]",
+      "location": "[variables('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('dlsName'))]",
+        "[resourceId('Microsoft.Insights/components', variables('appInsightsName'))]"
+      ],
+      "identity": {
+        "type": "systemAssigned"
+      },
+      "properties": {
+        "friendlyName": "[variables('machinelearningName')]",
+        "keyVault": "[variables('keyVaultName')]",
+        "applicationInsights": "[resourceId('Microsoft.Insights/components',variables('appInsightsName'))]",
+        "storageAccount": "[resourceId('Microsoft.Storage/storageAccounts/',variables('dlsName'))]"
+      }
     },
     {
       "scope": "[concat('Microsoft.Storage/storageAccounts/', variables('dlsName'))]",
