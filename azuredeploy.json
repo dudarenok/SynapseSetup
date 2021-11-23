@@ -140,7 +140,7 @@
   },
   "resources": [
     {
-      "name": "keyVaultDeployment",
+      "name": "[variables('keyVaultName')]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
       "dependsOn": [
@@ -317,7 +317,8 @@
       },
       "dependsOn": [
         "[variables('dlsName')]",
-        "[variables('dlsFsName')]"
+        "[variables('dlsFsName')]",
+        "[variables('keyVaultName')]"
       ],
       "properties": {
         "defaultDataLakeStorage": {
