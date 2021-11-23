@@ -126,7 +126,7 @@
     "dlsFsName": "[toLower(concat(parameters('companyAcronym'),'fs'))]",
     "sqlPoolName": "[toLower(concat(variables('workspaceName'),'sql1'))]",
     "workspaceName": "[toLower(concat(parameters('companyAcronym'),'ws'))]",
-    "keyVaultName": "[toLower(concat(variables('workspaceName'),'kev'))]",
+    "keyVaultName": "[toLower(concat(parameters('companyAcronym'),'kev'))]",
     "sparkPoolName": "[toLower(concat(variables('workspaceName'),'spark1'))]",
     "machinelearningName": "[toLower(concat(variables('workspaceName'),'ml'))]",
     "appInsightsName": "[toLower(concat(variables('workspaceName'),'ai'))]",
@@ -140,7 +140,7 @@
   },
   "resources": [
     {
-      "name": "[variables('keyVaultName')]",
+      "name": "xxx",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
       "dependsOn": [
@@ -317,8 +317,7 @@
       },
       "dependsOn": [
         "[variables('dlsName')]",
-        "[variables('dlsFsName')]",
-        "[variables('keyVaultName')]"
+        "[variables('dlsFsName')]"
       ],
       "properties": {
         "defaultDataLakeStorage": {
