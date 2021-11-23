@@ -317,8 +317,7 @@
       },
       "dependsOn": [
         "[variables('dlsName')]",
-        "[variables('dlsFsName')]",
-        "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]"
+        "[variables('dlsFsName')]"
       ],
       "properties": {
         "defaultDataLakeStorage": {
