@@ -15,7 +15,7 @@ We need you to prepare some things for the upcoming Synapse Bootcamp. Since you 
 
 Be aware that the SQL password should consist of uppercase letters, lowercase letters and digits (0-9). Any non-alphanumeric characters such as: !, $, #, or % will lead the deployment to fail.
 
-Leave the rest as is.
+Leave the rest as is. It will take around 10 minutes for the following deployment to create all resources.
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Falschroe%2FSynapseSetup%2Fmain%2Fazuredeploy.json)
 
