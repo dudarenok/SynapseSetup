@@ -20,24 +20,6 @@
         "description": "The password for the SQL Administrator"
       }
     },
-    "keyVaultOption": {
-      "type": "string",
-      "defaultValue": "new",
-      "allowedValues": [
-        "new",
-        "existing"
-      ],
-      "metadata": {
-        "description": "Determines whether or not a new key vault should be provisioned."
-      }
-    },
-    "keyVaultName": {
-      "type": "string",
-      "defaultValue": "[concat('kv',uniqueString(resourceGroup().id, parameters('workspaceName')))]",
-      "metadata": {
-        "description": "Name of the key vault."
-      }
-    },
     "timeZone": {
       "type": "string",
       "defaultValue": "W. Europe Standard Time",
@@ -181,6 +163,9 @@
           },
           "datalakeAccountAccessKeyValue": {
             "value": "[listKeys(variables('storageAccountId'), '2019-06-01').keys[0].value]"
+          },
+          "mlAccountAccessKeyValue": {
+            "value": "[listKeys(variables('storageAccountId'), '2019-06-01').keys[0].value]"
           }
         }
       }
@@ -207,6 +192,9 @@
           },
           "workspaceName": {
             "value": "[variables('workspaceName')]"
+          },
+          "mlWorkspaceName": {
+            "value": "[variables('machinelearningName')]"
           }
         }
       }

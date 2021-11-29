@@ -8,6 +8,12 @@
         "description": "Specifies the name of the key vault."
       }
     },
+    "mlWorkspaceName": {
+      "type": "string",
+      "metadata": {
+        "description": "Specifies the name of the key vault."
+      }
+    },
     "location": {
       "type": "string",
       "metadata": {
@@ -48,7 +54,7 @@
           },
           {
             "tenantId": "[variables('tenantId')]",
-            "objectId": "[reference(concat('Microsoft.MachineLearningServices/workspaces/', parameters('workspaceName'), 'ml'), '2021-07-01', 'Full').identity.principalId]",
+            "objectId": "[reference(concat('Microsoft.MachineLearningServices/workspaces/', parameters('mlWorkspaceName')), '2021-07-01', 'Full').identity.principalId]",
             "permissions": {
               "keys": [],
               "secrets": [
