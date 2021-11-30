@@ -23,7 +23,7 @@ Once the resources are deployed take a look at them.
 
 You will find a **Dedicated SQL pool** that is named **XXXwssql1 (XXXws/XXXwssql1)**. We want to pause this resource, since it will cost you otherwise. We did set it up to automatically pause at 6 in the afternoon, but since you potentially did this in the morning, let's pause it manually. </br>
 Select the dedicated SQL pool. In the detail view you will find the button **Pause** select it. It will ask you for confirmation. For a more detailed description look [here](https://docs.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/pause-and-resume-compute-portal). </br>
-Have a look at the permissions and make sure everything is set up to work with the given resources. Also make sure that your teammates are at least contributers on either the resource group your Azure services are residing in or on all the services themselves. [Here](https://docs.microsoft.com/en-us/azure/synapse-analytics/security/how-to-set-up-access-control) you will find a detailed description. </br>
+Have a look at the permissions and make sure everything is set up to work with the given resources. Also make sure that your teammates are at least contributers on either the resource group your Azure services are residing in or on all the services themselves. Make sure everyone has the role of **Storage Blob Data Contributor** on the Azure Storage Account **XXXdls**. [Here](https://docs.microsoft.com/en-us/azure/synapse-analytics/security/how-to-set-up-access-control) you will find a detailed description. </br>
 After that you are all set on the Azure environment.
 </br>
 </br>
