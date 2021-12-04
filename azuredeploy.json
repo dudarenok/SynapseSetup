@@ -123,6 +123,7 @@
     "_artifactsLocation": "[deployment().properties.templatelink.uri]",
     "location": "[resourceGroup().location]",
     "dlsName": "[toLower(concat(parameters('companyAcronym'),'dls'))]",
+    "storageName": "[toLower(concat(parameters('companyAcronym'),'mlsa'))]",
     "dlsFsName": "[toLower(concat(parameters('companyAcronym'),'fs'))]",
     "sqlPoolName": "[toLower(concat(variables('workspaceName'),'sql1'))]",
     "workspaceName": "[toLower(concat(parameters('companyAcronym'),'ws'))]",
@@ -259,6 +260,30 @@
             "value": "[variables('location')]"
           }
         }
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2019-06-01",
+      "name": "[variables('storageName')]",
+      "location": "[variables('location')]",
+      "sku": {
+        "name": "Standard_LRS"
+      },
+      "kind": "StorageV2",
+      "properties": {
+        "encryption": {
+          "services": {
+            "blob": {
+              "enabled": true
+            },
+            "file": {
+              "enabled": true
+            }
+          },
+          "keySource": "Microsoft.Storage"
+        },
+        "supportsHttpsTrafficOnly": true
       }
     },
     {
@@ -419,8 +444,9 @@
       "name": "[variables('machinelearningName')]",
       "location": "[variables('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('dlsName'))]",
-        "[resourceId('Microsoft.Insights/components', variables('appInsightsName'))]"
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageName'))]",
+        "[resourceId('Microsoft.Insights/components', variables('appInsightsName'))]",
+        "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]"
       ],
       "identity": {
         "type": "systemAssigned"
@@ -429,14 +455,14 @@
         "friendlyName": "[variables('machinelearningName')]",
         "keyVault": "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]",
         "applicationInsights": "[resourceId('Microsoft.Insights/components',variables('appInsightsName'))]",
-        "storageAccount": "[resourceId('Microsoft.Storage/storageAccounts/',variables('dlsName'))]"
+        "storageAccount": "[resourceId('Microsoft.Storage/storageAccounts/',variables('storageName'))]"
       }
     },
     {
-      "scope": "[concat('Microsoft.Storage/storageAccounts/', variables('dlsName'))]",
+      "scope": "[concat('Microsoft.Storage/storageAccounts/', variables('storageName'))]",
       "type": "Microsoft.Authorization/roleAssignments",
       "apiVersion": "2020-04-01-preview",
-      "name": "[guid(uniqueString(variables('dlsName')))]",
+      "name": "[guid(uniqueString(variables('storageName')))]",
       "location": "[variables('location')]",
       "dependsOn": [
         "[variables('workspaceName')]"
