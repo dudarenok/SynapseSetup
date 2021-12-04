@@ -445,8 +445,7 @@
       "location": "[variables('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Storage/storageAccounts', variables('storageName'))]",
-        "[resourceId('Microsoft.Insights/components', variables('appInsightsName'))]",
-        "[resourceId('Microsoft.Resources/deployments','keyVaultDeployment')]"
+        "[resourceId('Microsoft.Insights/components', variables('appInsightsName'))]"
       ],
       "identity": {
         "type": "systemAssigned"
