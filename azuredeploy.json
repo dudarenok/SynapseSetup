@@ -297,11 +297,11 @@
       "properties": {
         "nodeCount": 5,
         "nodeSizeFamily": "MemoryOptimized",
-        "nodeSize": "Medium",
+        "nodeSize": "Small",
         "autoScale": {
           "enabled": true,
           "minNodeCount": 3,
-          "maxNodeCount": 20
+          "maxNodeCount": 10
         },
         "autoPause": {
           "enabled": true,
