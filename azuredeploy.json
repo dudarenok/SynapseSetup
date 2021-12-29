@@ -360,10 +360,7 @@
         },
         "sqlAdministratorLogin": "[parameters('sqlAdministratorLogin')]",
         "sqlAdministratorLoginPassword": "[parameters('sqlAdministratorLoginPassword')]",
-        "managedVirtualNetwork": "default",
-        "purviewConfiguration": {
-          "purviewResourceId": "[resourceId('Microsoft.Purview/accounts', variables('purviewName'))]"
-        }
+        "managedVirtualNetwork": "default"
       },
       "resources": [
         {
