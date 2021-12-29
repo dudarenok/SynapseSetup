@@ -131,6 +131,7 @@
     "sparkPoolName": "[toLower(concat(variables('workspaceName'),'spark1'))]",
     "machinelearningName": "[toLower(concat(variables('workspaceName'),'ml'))]",
     "appInsightsName": "[toLower(concat(variables('workspaceName'),'ai'))]",
+    "purviewName": "[toLower(concat(parameters('companyAcronym'),'pva'))]",
     "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('dlsName'))]",
     "sku": "DW200c",
     "allowAllConnections": "true",
@@ -349,6 +350,7 @@
       "dependsOn": [
         "[variables('dlsName')]",
         "[variables('dlsFsName')]",
+        "[variables('purviewName')]",
         "[resourceId('Microsoft.Resources/deployments','keyVaultDeployment')]"
       ],
       "properties": {
@@ -358,7 +360,10 @@
         },
         "sqlAdministratorLogin": "[parameters('sqlAdministratorLogin')]",
         "sqlAdministratorLoginPassword": "[parameters('sqlAdministratorLoginPassword')]",
-        "managedVirtualNetwork": "default"
+        "managedVirtualNetwork": "default",
+        "purviewConfiguration": {
+          "purviewResourceId": "[resourceId('Microsoft.Purview/accounts', variables('purviewName'))]"
+        }
       },
       "resources": [
         {
@@ -470,6 +475,24 @@
         "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe')]",
         "principalId": "[reference(resourceId('Microsoft.Synapse/workspaces', variables('workspaceName')), '2019-06-01-preview', 'Full').identity.principalId]",
         "principalType": "ServicePrincipal"
+      }
+    },
+    {
+      "type": "Microsoft.Purview/accounts",
+      "apiVersion": "2021-07-01",
+      "name": "[variables('purviewName')]",
+      "location": "westeurope",
+      "sku": {
+        "name": "Standard",
+        "capacity": 1
+      },
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "properties": {
+        "cloudConnectors": {},
+        "publicNetworkAccess": "Enabled",
+        "managedResourceGroupName": "[concat('managed-rg-', variables('purviewName'))]"
       }
     },
     {
