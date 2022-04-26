@@ -15,7 +15,7 @@ We need you to prepare some things for the upcoming Synapse Bootcamp. Since you 
 
 Be aware that the SQL password should consist of uppercase letters, lowercase letters and digits (0-9). Any non-alphanumeric characters such as: !, $, #, or % will lead the deployment to fail.
 
-If you are using a new subscription make sure all needed resource providers are registered. The following providers are needed: Microsoft.Logic, Microsoft.Storage, Microsoft.Insights, Microsoft.MachineLearningServices, Microsoft.KeyVault, Microsoft.Sql, Microsoft.DataFactory, Microsoft.DataLakeStore, Microsoft.Notebooks, Microsoft.Synapse.
+If you are using a new subscription make sure all needed resource providers are registered. The following providers are needed: Microsoft.Logic, Microsoft.Storage, Microsoft.Insights, Microsoft.MachineLearningServices, Microsoft.KeyVault, Microsoft.Sql, Microsoft.DataFactory, Microsoft.DataLakeStore, Microsoft.Notebooks, Microsoft.Synapse, Microsoft.Purview.
 
 Leave the rest as is. It will take around 10 minutes for the following deployment to create all resources.
 
