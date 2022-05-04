@@ -19,7 +19,7 @@ If you are using a new subscription make sure all needed resource providers are 
 
 Leave the rest as is. It will take around 10 minutes for the following deployment to create all resources.
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Falschroe%2FSynapseSetup%2Fmain%2Fazuredeploy.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdudarenok%2FSynapseSetup%2Fmain%2Fazuredeploy.json)
 
 Once the resources are deployed take a look at them.
 
