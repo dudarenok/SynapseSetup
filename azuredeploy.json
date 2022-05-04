@@ -79,7 +79,6 @@
       "defaultValue": "06:00 PM ( 18:00 )",
       "allowedValues": [
         "12:00 AM (  0:00 )",
-        "01:00 AM (  1:00 )",
         "02:00 AM (  2:00 )",
         "03:00 AM (  3:00 )",
         "04:00 AM (  4:00 )",
@@ -390,7 +389,7 @@
           "type": "managedIdentitySqlControlSettings",
           "apiVersion": "2019-06-01-preview",
           "name": "default",
-          "location": "[variables('location')]",
+          "location": "germanywestcentral",
           "dependsOn": [ "[variables('workspaceName')]" ],
           "properties": {
             "grantSqlControlToManagedIdentity": {
@@ -404,7 +403,7 @@
       "type": "Microsoft.Synapse/workspaces/sqlPools",
       "apiVersion": "2019-06-01-preview",
       "name": "[concat(variables('workspaceName'), '/', variables('sqlPoolName'))]",
-      "location": "[variables('location')]",
+      "location": "germanywestcentral",
       "sku": {
         "name": "[variables('sku')]"
       },
@@ -421,7 +420,7 @@
           "type": "metadataSync",
           "apiVersion": "2019-06-01-preview",
           "name": "config",
-          "location": "[variables('location')]",
+          "location": "germanywestcentral",
           "dependsOn": [
             "[variables('sqlPoolName')]"
           ],
